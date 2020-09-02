@@ -52,7 +52,13 @@ public class AwsAmazonAndroidTest extends AwsAmazonTest {
 
     @After
     public void tearDown() {
-        this.remoteWebDriver.close();
-        this.service.stop();
+        try {
+            this.remoteWebDriver.close();
+            this.service.stop();
+        } catch (Exception e) {
+            //We did our best trying to stop the remote driver and the service, but it failed for some reason.
+            //Might be because of the platform we are using.
+            //In a production setup, you would probably handle this better than I did here.
+        }
     }
 }
